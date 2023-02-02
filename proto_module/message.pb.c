@@ -7,31 +7,34 @@
 #endif
 
 
-/* The following messages exceed 64kB in size: List_level, View */
+/* The following messages exceed 64kB in size: View */
 
 /* The PB_FIELD_32BIT compilation option must be defined to support messages that exceed 64 kB in size. */
 #ifndef PB_FIELD_32BIT
-#error Enable PB_FIELD_32BIT to support messages exceeding 64kB in size: List_level, View
+#error Enable PB_FIELD_32BIT to support messages exceeding 64kB in size: View
 #endif
-PB_BIND(Field_value, Field_value, 2)
+PB_BIND(Field_value, Field_value, AUTO)
 
 
-PB_BIND(Field, Field, 2)
+PB_BIND(Field, Field, AUTO)
 
 
-PB_BIND(Entity, Entity, 4)
+PB_BIND(Entity, Entity, 2)
 
 
-PB_BIND(Condition, Condition, 2)
+PB_BIND(Condition, Condition, AUTO)
 
 
-PB_BIND(Filter, Filter, 4)
+PB_BIND(Filter, Filter, 2)
 
 
 PB_BIND(List_level, List_level, 4)
 
 
 PB_BIND(View, View, 4)
+
+
+PB_BIND(Response, Response, AUTO)
 
 
 

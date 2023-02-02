@@ -36,7 +36,7 @@ union field_types{
 };
 
 struct field {
-    uint8_t type;
+    enum types type;
     char name[MAX_NAME_SIZE];
     union field_types value;
 };
@@ -51,7 +51,7 @@ struct entity {
 struct condition {
     uint8_t is_id;
     uint64_t id;
-    uint8_t type;
+    enum types type;
     enum condition_code op;
     char field_name[MAX_NAME_SIZE];
     union field_types field_value;

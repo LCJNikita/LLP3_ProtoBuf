@@ -16,8 +16,6 @@ message Field{
 message Entity{
   repeated Field fields = 1;
   repeated uint64 rel = 2;
-  required uint32 fields_count = 3;
-  required uint32 rel_count = 4;
 }
 
 message Condition{
@@ -41,4 +39,10 @@ message List_level{
 message View {
   required uint32 op = 1;
   repeated List_level tree = 2;
+  optional Entity entity = 3;
+}
+
+message Response{
+  required uint32 is_last = 1;
+  required string answer = 2;
 }
