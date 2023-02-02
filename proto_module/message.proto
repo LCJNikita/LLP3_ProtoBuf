@@ -1,3 +1,44 @@
-message Example {
-  required int32 value = 1;
+syntax = "proto2";
+
+message Field_value{
+  optional string str_val = 1;
+  optional int64 int_val = 2;
+  optional int64 bool_val = 3;
+  optional double real_val = 4;
+}
+
+message Field{
+  required uint32 type = 1;
+  required string name = 2;
+  required Field_value val = 3;
+}
+
+message Entity{
+  repeated Field fields = 1;
+  repeated uint64 rel = 2;
+  required uint32 fields_count = 3;
+  required uint32 rel_count = 4;
+}
+
+message Condition{
+  required uint32 is_id = 1;
+  required uint64 id = 2;
+  required uint32 type = 3;
+  required uint32 op = 4;
+  required string field_name = 5;
+  required Field_value val = 6;
+}
+
+message Filter{
+  required uint32 negative = 1;
+  repeated Condition conditions = 2;
+}
+
+message List_level{
+  repeated Filter filters = 1;
+}
+
+message View {
+  required uint32 op = 1;
+  repeated List_level tree = 2;
 }

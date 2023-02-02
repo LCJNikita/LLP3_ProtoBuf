@@ -10,9 +10,57 @@
 #endif
 
 /* Struct definitions */
-typedef struct _Example {
-    int32_t value;
-} Example;
+typedef struct _Field_value {
+    bool has_str_val;
+    char str_val[1024];
+    bool has_int_val;
+    int64_t int_val;
+    bool has_bool_val;
+    int64_t bool_val;
+    bool has_real_val;
+    double real_val;
+} Field_value;
+
+typedef struct _Field {
+    uint32_t type;
+    char name[1024];
+    Field_value val;
+} Field;
+
+typedef struct _Entity {
+    pb_size_t fields_count;
+    Field fields[20];
+    pb_size_t rel_count;
+    uint64_t rel[20];
+    uint32_t fields_count;
+    uint32_t rel_count;
+} Entity;
+
+typedef struct _Condition {
+    uint32_t is_id;
+    uint64_t id;
+    uint32_t type;
+    uint32_t op;
+    char field_name[1024];
+    Field_value val;
+} Condition;
+
+typedef struct _Filter {
+    uint32_t negative;
+    pb_size_t conditions_count;
+    Condition conditions[20];
+} Filter;
+
+typedef struct _List_level {
+    pb_size_t filters_count;
+    Filter filters[20];
+} List_level;
+
+typedef struct _View {
+    uint32_t op;
+    pb_size_t tree_count;
+    List_level tree[20];
+} View;
 
 
 #ifdef __cplusplus
@@ -20,25 +68,127 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define Example_init_default                     {0}
-#define Example_init_zero                        {0}
+#define Field_value_init_default                 {false, "", false, 0, false, 0, false, 0}
+#define Field_init_default                       {0, "", Field_value_init_default}
+#define Entity_init_default                      {0, {Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default, Field_init_default}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0}
+#define Condition_init_default                   {0, 0, 0, 0, "", Field_value_init_default}
+#define Filter_init_default                      {0, 0, {Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default, Condition_init_default}}
+#define List_level_init_default                  {0, {Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default, Filter_init_default}}
+#define View_init_default                        {0, 0, {List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default, List_level_init_default}}
+#define Field_value_init_zero                    {false, "", false, 0, false, 0, false, 0}
+#define Field_init_zero                          {0, "", Field_value_init_zero}
+#define Entity_init_zero                         {0, {Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero, Field_init_zero}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0}
+#define Condition_init_zero                      {0, 0, 0, 0, "", Field_value_init_zero}
+#define Filter_init_zero                         {0, 0, {Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero, Condition_init_zero}}
+#define List_level_init_zero                     {0, {Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero, Filter_init_zero}}
+#define View_init_zero                           {0, 0, {List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero, List_level_init_zero}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define Example_value_tag                        1
+#define Field_value_str_val_tag                  1
+#define Field_value_int_val_tag                  2
+#define Field_value_bool_val_tag                 3
+#define Field_value_real_val_tag                 4
+#define Field_type_tag                           1
+#define Field_name_tag                           2
+#define Field_val_tag                            3
+#define Entity_fields_tag                        1
+#define Entity_rel_tag                           2
+#define Entity_fields_count_tag                  3
+#define Entity_rel_count_tag                     4
+#define Condition_is_id_tag                      1
+#define Condition_id_tag                         2
+#define Condition_type_tag                       3
+#define Condition_op_tag                         4
+#define Condition_field_name_tag                 5
+#define Condition_val_tag                        6
+#define Filter_negative_tag                      1
+#define Filter_conditions_tag                    2
+#define List_level_filters_tag                   1
+#define View_op_tag                              1
+#define View_tree_tag                            2
 
 /* Struct field encoding specification for nanopb */
-#define Example_FIELDLIST(X, a) \
-X(a, STATIC,   REQUIRED, INT32,    value,             1)
-#define Example_CALLBACK NULL
-#define Example_DEFAULT NULL
+#define Field_value_FIELDLIST(X, a) \
+X(a, STATIC,   OPTIONAL, STRING,   str_val,           1) \
+X(a, STATIC,   OPTIONAL, INT64,    int_val,           2) \
+X(a, STATIC,   OPTIONAL, INT64,    bool_val,          3) \
+X(a, STATIC,   OPTIONAL, DOUBLE,   real_val,          4)
+#define Field_value_CALLBACK NULL
+#define Field_value_DEFAULT NULL
 
-extern const pb_msgdesc_t Example_msg;
+#define Field_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, UINT32,   type,              1) \
+X(a, STATIC,   REQUIRED, STRING,   name,              2) \
+X(a, STATIC,   REQUIRED, MESSAGE,  val,               3)
+#define Field_CALLBACK NULL
+#define Field_DEFAULT NULL
+#define Field_val_MSGTYPE Field_value
+
+#define Entity_FIELDLIST(X, a) \
+X(a, STATIC,   REPEATED, MESSAGE,  fields,            1) \
+X(a, STATIC,   REPEATED, UINT64,   rel,               2) \
+X(a, STATIC,   REQUIRED, UINT32,   fields_count,      3) \
+X(a, STATIC,   REQUIRED, UINT32,   rel_count,         4)
+#define Entity_CALLBACK NULL
+#define Entity_DEFAULT NULL
+#define Entity_fields_MSGTYPE Field
+
+#define Condition_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, UINT32,   is_id,             1) \
+X(a, STATIC,   REQUIRED, UINT64,   id,                2) \
+X(a, STATIC,   REQUIRED, UINT32,   type,              3) \
+X(a, STATIC,   REQUIRED, UINT32,   op,                4) \
+X(a, STATIC,   REQUIRED, STRING,   field_name,        5) \
+X(a, STATIC,   REQUIRED, MESSAGE,  val,               6)
+#define Condition_CALLBACK NULL
+#define Condition_DEFAULT NULL
+#define Condition_val_MSGTYPE Field_value
+
+#define Filter_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, UINT32,   negative,          1) \
+X(a, STATIC,   REPEATED, MESSAGE,  conditions,        2)
+#define Filter_CALLBACK NULL
+#define Filter_DEFAULT NULL
+#define Filter_conditions_MSGTYPE Condition
+
+#define List_level_FIELDLIST(X, a) \
+X(a, STATIC,   REPEATED, MESSAGE,  filters,           1)
+#define List_level_CALLBACK NULL
+#define List_level_DEFAULT NULL
+#define List_level_filters_MSGTYPE Filter
+
+#define View_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, UINT32,   op,                1) \
+X(a, STATIC,   REPEATED, MESSAGE,  tree,              2)
+#define View_CALLBACK NULL
+#define View_DEFAULT NULL
+#define View_tree_MSGTYPE List_level
+
+extern const pb_msgdesc_t Field_value_msg;
+extern const pb_msgdesc_t Field_msg;
+extern const pb_msgdesc_t Entity_msg;
+extern const pb_msgdesc_t Condition_msg;
+extern const pb_msgdesc_t Filter_msg;
+extern const pb_msgdesc_t List_level_msg;
+extern const pb_msgdesc_t View_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
-#define Example_fields &Example_msg
+#define Field_value_fields &Field_value_msg
+#define Field_fields &Field_msg
+#define Entity_fields &Entity_msg
+#define Condition_fields &Condition_msg
+#define Filter_fields &Filter_msg
+#define List_level_fields &List_level_msg
+#define View_fields &View_msg
 
 /* Maximum encoded size of messages (where known) */
-#define Example_size                             11
+#define Condition_size                           2115
+#define Entity_size                              42132
+#define Field_size                               2092
+#define Field_value_size                         1057
+#define Filter_size                              42366
+#define List_level_size                          847400
+#define View_size                                16948086
 
 #ifdef __cplusplus
 } /* extern "C" */
