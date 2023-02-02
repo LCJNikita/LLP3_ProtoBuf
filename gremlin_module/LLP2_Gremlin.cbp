@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="LLP2_Gremlin"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\gremlin_module\;CMake Files\proto_module\;CMake Files\proto_module\nanopb\;CMake Files\proto_module\nanopb\extra\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gremlin_lib">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/libgremlin_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 gremlin_lib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gremlin_lib/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/libgremlin_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 gremlin_lib/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools/printer.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools/string_tools.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/structure.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools/alloc_view.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools/parser_pieces.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/stools/printer.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/stools/string_tools.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/view_tools/alloc_view.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/view_tools/parser_pieces.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\gremlin_module\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\proto_module\nanopb\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/extra/nanopb-config-version.cmake.in">
+			<Option virtualFolder="CMake Files\proto_module\nanopb\extra\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

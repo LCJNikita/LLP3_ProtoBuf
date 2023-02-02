@@ -1,6 +1,0 @@
-/mnt/c/Users/User/Desktop/LCJNikita/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/User/Desktop/LCJNikita/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/c/Users/User/Desktop/LCJNikita/cmake-build-debug/CMakeFiles/LCJNikita.dir
-/mnt/c/Users/User/Desktop/LCJNikita/cmake-build-debug/gremlin_module/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/User/Desktop/LCJNikita/cmake-build-debug/gremlin_module/CMakeFiles/edit_cache.dir
-/mnt/c/Users/User/Desktop/LCJNikita/cmake-build-debug/gremlin_module/CMakeFiles/LLP2_Gremlin.dir
