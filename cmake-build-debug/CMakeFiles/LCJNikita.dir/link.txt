@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/LCJNikita.dir/main.c.o  -o LCJNikita 

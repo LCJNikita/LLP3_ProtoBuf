@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="LCJNikita"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\gremlin_module\;CMake Files\proto_module\;CMake Files\proto_module\nanopb\;CMake Files\proto_module\nanopb\extra\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LLP3_client">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/LLP3_client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 LLP3_client"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LLP3_client/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/LLP3_client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 LLP3_client/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LLP3_server">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/LLP3_server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 LLP3_server"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LLP3_server/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/LLP3_server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/proto_module"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 LLP3_server/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gremlin_lib">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/libgremlin_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 gremlin_lib"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gremlin_lib/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/libgremlin_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools"/>
+					<Add directory="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/."/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 gremlin_lib/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb-static">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb-static"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb-static/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb-static/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="generate_nanopb_pb2.py">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 generate_nanopb_pb2.py"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools/printer.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/stools/string_tools.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/structure.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools/alloc_view.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/include/view_tools/parser_pieces.h">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/stools/printer.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/stools/string_tools.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/view_tools/alloc_view.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/src/view_tools/parser_pieces.c">
+			<Option target="gremlin_lib"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/main.c">
+			<Option target="LLP3_client"/>
+			<Option target="LLP3_server"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/message.pb.c">
+			<Option target="LLP3_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_common.c">
+			<Option target="LLP3_client"/>
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_common.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_decode.c">
+			<Option target="LLP3_client"/>
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_decode.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_encode.c">
+			<Option target="LLP3_client"/>
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_encode.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\gremlin_module\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\proto_module\nanopb\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/extra/nanopb-config-version.cmake.in">
+			<Option virtualFolder="CMake Files\proto_module\nanopb\extra\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

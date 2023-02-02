@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/LLP2_Gremlin.dir/main.c.o CMakeFiles/LLP2_Gremlin.dir/src/stools/string_tools.c.o CMakeFiles/LLP2_Gremlin.dir/src/view_tools/parser_pieces.c.o CMakeFiles/LLP2_Gremlin.dir/src/view_tools/alloc_view.c.o  -o LLP2_Gremlin 

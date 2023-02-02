@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/LLP3_server.dir/main.c.o  -o LLP3_server  -Wl,-rpath,/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module gremlin_module/libgremlin_lib.so 

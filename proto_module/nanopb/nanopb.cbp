@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="nanopb"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\gremlin_module\;CMake Files\proto_module\;CMake Files\proto_module\nanopb\;CMake Files\proto_module\nanopb\extra\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb-static">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb-static"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb-static/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb-static/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="protobuf-nanopb/fast">
+				<Option output="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/libprotobuf-nanopbd.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 protobuf-nanopb/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="generate_nanopb_pb2.py">
+				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 generate_nanopb_pb2.py"/>
+					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_common.c">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_common.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_decode.c">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_decode.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_encode.c">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/pb_encode.h">
+			<Option target="protobuf-nanopb-static"/>
+			<Option target="protobuf-nanopb"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\gremlin_module\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\proto_module\nanopb\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/extra/nanopb-config-version.cmake.in">
+			<Option virtualFolder="CMake Files\proto_module\nanopb\extra\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

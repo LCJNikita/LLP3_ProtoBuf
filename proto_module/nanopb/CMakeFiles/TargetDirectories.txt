@@ -1,0 +1,9 @@
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/generate_nanopb_pb2.py.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/protobuf-nanopb.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/protobuf-nanopb-static.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/edit_cache.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/list_install_components.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/install.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/install/local.dir
+/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeFiles/install/strip.dir
