@@ -12,7 +12,7 @@
 /* Struct definitions */
 typedef struct _Field_value {
     bool has_str_val;
-    char str_val[20];
+    char str_val[64];
     bool has_int_val;
     int64_t int_val;
     bool has_bool_val;
@@ -23,7 +23,7 @@ typedef struct _Field_value {
 
 typedef struct _Field {
     uint32_t type;
-    char name[20];
+    char name[64];
     Field_value val;
 } Field;
 
@@ -39,7 +39,7 @@ typedef struct _Condition {
     uint64_t id;
     uint32_t type;
     uint32_t op;
-    char field_name[20];
+    char field_name[64];
     Field_value val;
 } Condition;
 
@@ -64,7 +64,7 @@ typedef struct _View {
 
 typedef struct _Response {
     uint32_t is_last;
-    char answer[20];
+    char answer[64];
 } Response;
 
 
@@ -198,14 +198,14 @@ extern const pb_msgdesc_t Response_msg;
 #define Response_fields &Response_msg
 
 /* Maximum encoded size of messages (where known) */
-#define Condition_size                           104
-#define Entity_size                              1880
-#define Field_size                               81
-#define Field_value_size                         52
-#define Filter_size                              2126
-#define List_level_size                          42580
-#define Response_size                            27
-#define View_size                                853569
+#define Condition_size                           192
+#define Entity_size                              3660
+#define Field_size                               169
+#define Field_value_size                         96
+#define Filter_size                              3906
+#define List_level_size                          78180
+#define Response_size                            71
+#define View_size                                1567349
 
 #ifdef __cplusplus
 } /* extern "C" */

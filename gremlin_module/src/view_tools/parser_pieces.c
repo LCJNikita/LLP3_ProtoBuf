@@ -1,11 +1,46 @@
 #include "structure.h"
 #include "string_tools.h"
 #include "alloc_view.h"
+
 #define REQUEST_SIZE 1024
 
-static int64_t  parse_int(uint64_t *pointer, char *string) {
+static double parse_real(uint64_t *pointer, char *string) {
+    double result = 0;
+    int8_t flag = 0;
+    double exp = 0.1;
+    while (is_int(string[*pointer]) || string[*pointer] == '.') {
+        if (flag && string[*pointer] == '.') return result;
+        if (string[*pointer] == '.') {
+            flag++;
+            (*pointer)++;
+            continue;
+        }
+        if (flag) {
+            result = result + exp * (string[*pointer] - '0');
+            exp /= 10;
+        } else {
+            result = result * 10 + string[*pointer] - '0';
+        }
+        (*pointer)++;
+    }
+    return result;
+}
+
+static int8_t parse_bool(uint64_t *pointer, const char *str) {
+    if (str[*pointer] == 't' && str[*pointer + 1] == 'r' && str[*pointer + 2] == 'u' && str[*pointer + 3] == 'e') {
+        (*pointer) += 4;
+        return 1;
+    } else if (str[*pointer] == 'f' && str[*pointer + 1] == 'a' && str[*pointer + 2] == 'l' &&
+               str[*pointer + 3] == 's' && str[*pointer + 4] == 'e') {
+        (*pointer) += 5;
+        return 0;
+    }
+    return 0;
+}
+
+static int64_t parse_int(uint64_t *pointer, char *string) {
     int64_t result = 0;
-    while(is_int(string[*pointer])) {
+    while (is_int(string[*pointer])) {
         result = result * 10 + (string[*pointer] - '0');
         (*pointer)++;
     }
@@ -15,7 +50,7 @@ static int64_t  parse_int(uint64_t *pointer, char *string) {
 static char *parse_string(uint64_t *pointer, char *string) {
     char *str = malloc(sizeof(char) * MAX_NAME_SIZE);
     size_t len = 0;
-    while(is_char(string[*pointer]) && len < MAX_NAME_SIZE - 1) {
+    while (is_char(string[*pointer]) && len < MAX_NAME_SIZE - 1) {
         str[len] = string[*pointer];
         (*pointer)++;
         len++;
@@ -32,14 +67,12 @@ static enum condition_code parse_condition(uint64_t *pointer, char *string) {
             if (string[*pointer] == '=') {
                 (*pointer)++;
                 return OP_NOT_LESS;
-            }
-            else return OP_GREATER;
+            } else return OP_GREATER;
         case '<':
             if (string[*pointer] == '=') {
                 (*pointer)++;
                 return OP_NOT_GREATER;
-            }
-            else return OP_LESS;
+            } else return OP_LESS;
         case 's':
             if (string[*pointer] == 'u' && string[*pointer + 1] == 'b') {
                 (*pointer)++;
@@ -62,7 +95,7 @@ uint8_t parse_operator(uint64_t *pointer, struct view *view, char *string) {
     if (string[*pointer] != '.') return WRONG_COMMAND;
     (*pointer)++;
     size_t len = 0;
-    while(is_char(string[*pointer]) && len < MAX_NAME_SIZE - 1) {
+    while (is_char(string[*pointer]) && len < MAX_NAME_SIZE - 1) {
         str[len] = string[*pointer];
         (*pointer)++;
         len++;
@@ -120,10 +153,19 @@ uint8_t parse_operator(uint64_t *pointer, struct view *view, char *string) {
                 view->entity->fields[view->entity->fields_count].type = STRING_TYPE;
                 if (string[*pointer] == '"') (*pointer)++;
                 else return WRONG_COMMAND;
+            } else if (string[*pointer] == 't' || string[*pointer] == 'f') {
+                int8_t b = parse_bool(pointer, string);
+                view->entity->fields[view->entity->fields_count].value.boolean = b;
+                view->entity->fields[view->entity->fields_count].type = BOOLEAN_TYPE;
             } else {
-                id = parse_int(pointer, string);
-                view->entity->fields[view->entity->fields_count].value.integer = id;
-                view->entity->fields[view->entity->fields_count].type = INTEGER_TYPE;
+                double real = parse_real(pointer, string);
+                if ((double) ((int64_t) real) < real) {
+                    view->entity->fields[view->entity->fields_count].value.real = real;
+                    view->entity->fields[view->entity->fields_count].type = REAL_TYPE;
+                } else {
+                    view->entity->fields[view->entity->fields_count].value.integer = real;
+                    view->entity->fields[view->entity->fields_count].type = INTEGER_TYPE;
+                }
             }
             view->entity->fields_count++;
             break;
@@ -154,7 +196,8 @@ uint8_t parse_operator(uint64_t *pointer, struct view *view, char *string) {
         case UPDATE_COMMAND:
             view->op = CRUD_UPDATE;
             break;
-        default:break;
+        default:
+            break;
     }
     if (string[*pointer] != ')') return WRONG_COMMAND;
     (*pointer)++;
@@ -170,12 +213,12 @@ struct view *parse_request() {
     create_view(&view);
     view->entity = malloc(sizeof(struct entity));
     scanf("%s", string);
-    if (string[0] != 'g' || string[1] != '.' || string[2] != 'V'){
+    if (string[0] != 'g' || string[1] != '.' || string[2] != 'V') {
         printf("syntax error!\n");
         return NULL;
     }
     pointer = 3;
-    while(string[pointer]) {
+    while (string[pointer]) {
         code = parse_operator(&pointer, view, string);
         if ((code == VALUE_COMMAND || code == REL_COMMAND) && !flag || code == WRONG_COMMAND) {
             printf("syntax error!\n");
@@ -185,7 +228,7 @@ struct view *parse_request() {
             if (flag) {
                 printf("syntax error!\n");
                 return NULL;
-            } else flag ++;
+            } else flag++;
         }
     }
     if (!flag) {

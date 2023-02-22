@@ -5,7 +5,7 @@
 		<Option title="nanopb"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\gremlin_module\;CMake Files\proto_module\;CMake Files\proto_module\nanopb\;CMake Files\proto_module\nanopb\extra\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\gremlin_module\;CMake Files\server_module\;CMake Files\proto_module\;CMake Files\proto_module\nanopb\;CMake Files\proto_module\nanopb\extra\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb"/>
@@ -117,6 +117,9 @@
 		</Unit>
 		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/gremlin_module/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\gremlin_module\"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/server_module/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\server_module\"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/User/Desktop/LCJNikita/proto_module/nanopb/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\proto_module\nanopb\"/>

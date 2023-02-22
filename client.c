@@ -16,7 +16,7 @@ void parse_view(struct view view, View *view_new);
 int main(int argc, char *argv[]) {
 
     if (argc != 3) {
-        printf("Expected 2 parameters: <host address> <port>\n Found %d.\n", argc);
+        printf("Expected 2 parameters: <host address> <port>\n Found %d.\n", argc - 1);
         return 1;
     }
 
@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
             pb_ostream_t output = pb_ostream_from_socket(sockfd);
             if (!pb_encode_delimited(&output, View_fields, &view_new)) {
                 fprintf(stderr, "Encoding failed: %s\n", PB_GET_ERROR(&output));
+                return 2;
             }
 
             Response r = {};

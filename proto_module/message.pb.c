@@ -7,11 +7,11 @@
 #endif
 
 
-/* The following messages exceed 64kB in size: View */
+/* The following messages exceed 64kB in size: List_level, View */
 
 /* The PB_FIELD_32BIT compilation option must be defined to support messages that exceed 64 kB in size. */
 #ifndef PB_FIELD_32BIT
-#error Enable PB_FIELD_32BIT to support messages exceeding 64kB in size: View
+#error Enable PB_FIELD_32BIT to support messages exceeding 64kB in size: List_level, View
 #endif
 PB_BIND(Field_value, Field_value, AUTO)
 
