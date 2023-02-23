@@ -17,14 +17,17 @@ add_executable(LLP3_server server.c
         proto_module/nanopb/pb_decode.c
         proto_module/nanopb/pb_common.c
         proto_module/message.pb.c
-        proto_module/common.c)
+        proto_module/message.pb.h
+        proto_module/common.c
+        proto_module/nanopb/pb.h)
 
 add_executable(LLP3_client client.c
         proto_module/nanopb/pb_encode.c
         proto_module/nanopb/pb_decode.c
         proto_module/nanopb/pb_common.c
         proto_module/message.pb.c
-        proto_module/common.c)
+        proto_module/common.c
+        proto_module/nanopb/pb.h)
 
 target_link_libraries(LLP3_server gremlin_lib)
 target_link_libraries(LLP3_server graph_lib)

@@ -3,6 +3,7 @@
 #include "proto_module/message.pb.h"
 #include "proto_module/common.h"
 #include "server_module/graph.h"
+#include "structure.h"
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -61,42 +62,62 @@ int main(int argc, char **argv) {
 
 
         struct GraphDB db;
-        loadHeaderStructFromFile(&db, "data.bin");
+        char *filename = "data.bin";
+        loadHeaderStructFromFile(&db, filename);\
 
-        char *inputString = "";
-        char converted[STR_LEN];
-
-        for (int i = 0; i < v.entity.fields_count; i++) {
-            switch (v.entity.fields[i].type) {
-                case 0:
-                    sprintf(converted, "%s", v.entity.fields[i].val.str_val);
-                    break;
-                case 1:
-                    sprintf(converted, "%ld", v.entity.fields[i].val.int_val);
-                    break;
-                case 2:
-                    sprintf(converted, "%f", v.entity.fields[i].val.real_val);
-                    break;
-                case 3:
-                    if (v.entity.fields[i].val.bool_val)
-                        sprintf(converted, "true");
-                    else
-                        sprintf(converted, "false");
-                    break;
-
+        switch (v.op) {
+            case CRUD_GET: {
+                int *res;
+                size_t res_cnt = findRowsByFilters(filename, v, &res);
+                for (int i = 0; i < res_cnt; i++) {
+                    printf("%d ", res[i]);
+                }
+                break;
             }
-            inputString = concat(inputString, converted);
+            case CRUD_NEW: {
+                char *inputString = "";
+                char converted[STR_LEN];
 
-            if (i < v.entity.fields_count - 1)
-                inputString = concat(inputString, ",");
+                for (int i = 0; i < v.entity.fields_count; i++) {
+                    switch (v.entity.fields[i].type) {
+                        case 0:
+                            sprintf(converted, "%s", v.entity.fields[i].val.str_val);
+                            break;
+                        case 1:
+                            sprintf(converted, "%ld", v.entity.fields[i].val.int_val);
+                            break;
+                        case 2:
+                            sprintf(converted, "%f", v.entity.fields[i].val.real_val);
+                            break;
+                        case 3:
+                            if (v.entity.fields[i].val.bool_val)
+                                sprintf(converted, "true");
+                            else
+                                sprintf(converted, "false");
+                            break;
 
-        }
-        struct Row row;
-        if (parseAndSetRow(&db, inputString, &row)){
-            printRow(&db, &row);
-            response = concat(response, "Successfully added!\n");
-        }else{
-            response = concat(response, "Error while adding!\n");
+                    }
+                    inputString = concat(inputString, converted);
+
+                    if (i < v.entity.fields_count - 1)
+                        inputString = concat(inputString, ",");
+
+                }
+
+                struct Row row;
+                if (parseAndSetRow(&db, inputString, &row)) {
+                    addRowToFile("data.bin", &row);
+                    printRow(&db, &row);
+                    response = concat(response, "Successfully added!\n");
+                } else {
+                    response = concat(response, "Error while adding!\n");
+                }
+            }
+                break;
+            case CRUD_REMOVE:
+                break;
+            case CRUD_UPDATE:
+                break;
         }
 
 
