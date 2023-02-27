@@ -52,17 +52,15 @@ void printHeaderGraphDB(struct GraphDB *db);
 void printNode(struct GraphDB *db, struct Node *node);
 void printNodeToVar(struct GraphDB db, struct Node node, char** str);
 void saveHeaderStructToFile(struct GraphDB* db, const char* fileName);
-void loadHeaderStructFromFile(struct GraphDB* db, const char* fileName);
+void loadHeaderStructFromFile(struct GraphDB *db, FILE* file);
+FILE* tryOpenFile(const char *filename);
 void movePointerToEndOfHeader(FILE* file);
 void addNodeToFile(const char* fileName, struct Node* node);
-void iterateByEachNode(const char* fileName);
-size_t getFileSize(const char* fileName);
-bool parseAndSetNode(struct GraphDB* db, char* inputString, struct Node* setted_node);
+bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_node, char** response);
 void clearFileData(const char* fileName);
 
 // CRUD
 void setScheme(struct GraphDB* db, struct Column *scheme, int columnsCount);
-bool createNode(const char* fileName, char* inputString);
 void findNodeByIndex(const char* fileName, int index, struct Node* node);
 bool checkCondition(struct Node node, int id, struct GraphDB db, Condition condition);
 size_t findNodesByFilters(const char *fileName, View view, int** result);

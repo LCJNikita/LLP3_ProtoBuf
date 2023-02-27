@@ -72,24 +72,27 @@ void printNodeToVar(struct GraphDB db, struct Node node, char **str) {
     char *tmp = malloc(sizeof(char) * STR_LEN);
 
     for (size_t i = 0; i < db.columnsCount; i++) {
+        sprintf(tmp, "%s: ", node.columns[i].name);
+        *str = concat(*str, tmp);
+
         switch (node.columns[i].type) {
             case INT32:
-                sprintf(tmp, "%d ", node.columns[i].int32Value);
+                sprintf(tmp, "%d\n", node.columns[i].int32Value);
                 break;
             case FLOAT:
-                sprintf(tmp, "%.2f ", node.columns[i].floatValue);
+                sprintf(tmp, "%.2f\n", node.columns[i].floatValue);
                 break;
             case CHAR_PTR:
-                sprintf(tmp, "%s ", node.columns[i].charValue);
+                sprintf(tmp, "%s\n", node.columns[i].charValue);
                 break;
             case BOOL:
-                sprintf(tmp, "%s ", node.columns[i].boolValue ? "true" : "false");
+                sprintf(tmp, "%s\n", node.columns[i].boolValue ? "true" : "false");
                 break;
         }
         *str = concat(*str, tmp);
     }
 
-    sprintf(tmp, "| relations number (%d) relations: [", node.relationsCount);
+    sprintf(tmp, "\nRelations count: %d\nRelations: [", node.relationsCount);
     *str = concat(*str, tmp);
 
     if (node.relationsCount != 0) {
@@ -100,10 +103,9 @@ void printNodeToVar(struct GraphDB db, struct Node node, char **str) {
             }
         }
     }
-    *str = concat(*str, "] \n");
+    *str = concat(*str, "]\n\n");
     free(tmp);
 }
-
 
 void saveHeaderStructToFile(struct GraphDB *db, const char *fileName) {
     FILE *file = fopen(fileName, "wb");
@@ -125,22 +127,12 @@ void saveHeaderStructToFile(struct GraphDB *db, const char *fileName) {
     fclose(file);
 }
 
-void loadHeaderStructFromFile(struct GraphDB *db, const char *fileName) {
+void loadHeaderStructFromFile(struct GraphDB *db, FILE* file) {
 
-    FILE *file = fopen(fileName, "rb");
-
-//    printf("current offset: %d\n", ftell(file));
-
-    if (file == NULL) {
-        printf("Error opening file (probably it not exists'): %s\n", fileName);
-        return;
-    }
-
+    fseek(file, 0, SEEK_SET);
     // Read the number of columns in the scheme
     int columnsCount;
     fread(&columnsCount, sizeof(int), 1, file);
-
-//    printf("current offset: %d\n", ftell(file));
 
     // Read the data type of each column in the scheme
     db->scheme = malloc(columnsCount * sizeof(struct Column));
@@ -155,7 +147,32 @@ void loadHeaderStructFromFile(struct GraphDB *db, const char *fileName) {
 
     db->nodesCount = nodesCount;
 
-    fclose(file);
+}
+
+FILE* tryOpenFile(const char *filename){
+    FILE *file = fopen(filename, "rb");
+
+    if (file == NULL) {
+        printf("File doesn't exist. Creating new with default scheme...\n");
+        file = fopen(filename, "w+b");
+        fclose(file);
+
+        int columnsCount = 4;
+        struct Column scheme[columnsCount];
+        scheme[0].type = INT32;
+        strncpy(scheme[0].name, "Age\0", MAX_NAME_LENGTH);
+        scheme[1].type = FLOAT;
+        strncpy(scheme[1].name, "Balance\0", MAX_NAME_LENGTH);
+        scheme[2].type = CHAR_PTR;
+        strncpy(scheme[2].name, "Name\0", MAX_NAME_LENGTH);
+        scheme[3].type = BOOL;
+        strncpy(scheme[3].name, "isAdult\0", MAX_NAME_LENGTH);
+        struct GraphDB db = {0};
+        setScheme(&db, scheme, columnsCount);
+        saveHeaderStructToFile(&db, filename);
+    }
+
+    return file;
 }
 
 void movePointerToEndOfHeader(FILE *file) {
@@ -173,48 +190,48 @@ void movePointerToEndOfHeader(FILE *file) {
     fseek(file, sizeof(int), SEEK_CUR);
 }
 
+
 // before use parseAndSetRow to create a row
-void addNodeToFile(const char *fileName, struct Node *node) {
+void addNodeToFile(FILE* file, struct Node *node) {
 
     // for columns and rows count
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
 //	printf("rowCount: %d \n", db.rowCount);
 
     // write new count of rows
-    FILE *write_file = fopen(fileName, "rb+");
-    movePointerToEndOfHeader(write_file);
-    fseek(write_file, -sizeof(int), SEEK_CUR);
+    movePointerToEndOfHeader(file);
+    fseek(file, -sizeof(int), SEEK_CUR);
 
     int newNodesCount = db.nodesCount + 1;
-    fwrite(&newNodesCount, sizeof(int), 1, write_file);
+    fwrite(&newNodesCount, sizeof(int), 1, file);
 
 //	printf("newRowsCount: %d\n", newRowsCount);
 //	printf("current offset: %d\n", ftell(write_file));
 
     // write new row
-    fseek(write_file, 0, SEEK_END);
+    fseek(file, 0, SEEK_END);
 
 //	printf("current offset: %d\n", ftell(write_file));
 
     int i;
     for (i = 0; i < db.columnsCount; i++) {
-        fwrite(&node->columns[i], sizeof(struct Column), 1, write_file);
+        fwrite(&node->columns[i], sizeof(struct Column), 1, file);
     }
 
     int relationsCount = 0;
-    fwrite(&relationsCount, sizeof(int), 1, write_file);
+    fwrite(&relationsCount, sizeof(int), 1, file);
 
     int k;
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         int relationValue = -1;
-        fwrite(&relationValue, sizeof(int), 1, write_file);
+        fwrite(&relationValue, sizeof(int), 1, file);
     }
 
 //    printf("current offset: %d\n", ftell(write_file));
 
-    fclose(write_file);
+    fclose(file);
 }
 
 // file needs offset to the row before calling
@@ -251,53 +268,13 @@ void writeNodeToFile(FILE *file, struct Node *node, const int columnsCount) {
     }
 }
 
-void iterateByEachNode(const char *fileName) {
-
-    struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
-
-    if (db.nodesCount == 0) {
-        printf("Error: db is empty");
-        return;
-    }
-
-    FILE *file = fopen(fileName, "rb");
-    movePointerToEndOfHeader(file);
-
-    int i;
-    for (i = 0; i < db.nodesCount; i++) {
-        printf("%d. ", i + 1);
-        struct Node node;
-        setNodeFromFile(file, &node, db.columnsCount);
-        printNode(&db, &node);
-
-        free(node.columns);
-    }
-
-    fclose(file);
-}
-
-size_t getFileSize(const char *fileName) {
-    FILE *file = fopen(fileName, "rb");
-
-    if (file == NULL) {
-        printf("Error opening file (probably it not exists'): %s\n", fileName);
-        return 0;
-    }
-
-    fseek(file, 0, SEEK_END);
-    size_t size = ftell(file);
-    fclose(file);
-
-    return size;
-}
-
-bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_node) {
+bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_node, char** response) {
     // Create a copy of the input string to tokenize it
     char *inputStringCopy = strdup(inputString);
 
     // Tokenize the input string using the comma as the delimiter
     char *token = strtok(inputStringCopy, ",");
+    char* tmp;
     int columnIndex = 0;
     struct Node node;
     node.columns = malloc(db->columnsCount * sizeof(struct Column));
@@ -310,20 +287,25 @@ bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_
             case INT32:
                 if (sscanf(token, "%d", &column->int32Value) != 1) {
                     free(inputStringCopy);
-                    printf("Error add operation, argument %d has ivalid type (needs INT32)\n", columnIndex);
+                    sprintf(tmp, "Error while adding!\nArgument %d has invalid type (INT32 expected).\n", columnIndex);
+                    *response = concat(*response, tmp);
                     return false;
                 }
                 break;
             case FLOAT:
                 if (sscanf(token, "%f", &column->floatValue) != 1) {
                     free(inputStringCopy);
-                    printf("Error add operation, argument %d has ivalid type (needs FLOAT)\n", columnIndex);
+                    sprintf(tmp, "Error while adding!\nArgument %d has invalid type (FLOAT expected).\n", columnIndex);
+                    *response = concat(*response, tmp);
                     return false;
                 }
                 break;
             case CHAR_PTR:
                 if (strlen(token) + 1 > MAX_CHAR_VALUE) {
-                    printf("Error add operation, argument %d is too long (CHAR_PTR)\n", columnIndex);
+                    free(inputStringCopy);
+                    sprintf(tmp, "Error while adding!\nArgument %d is too long (CHAR_PTR).\n", columnIndex);
+                    *response = concat(*response, tmp);
+                    return false;
                 }
                 strcpy(column->charValue, token);
                 break;
@@ -334,7 +316,8 @@ bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_
                     column->boolValue = false;
                 } else {
                     free(inputStringCopy);
-                    printf("Error add operation, argument %d has ivalid type (needs BOOL)\n", columnIndex);
+                    sprintf(tmp, "Error while adding!\nArgument %d has invalid type (BOOL expected).\n", columnIndex);
+                    *response = concat(*response, tmp);
                     return false;
                 }
                 break;
@@ -373,27 +356,6 @@ void clearFileData(const char *fileName) {
 
 // =========================== CRUD ================================
 
-// ======= CREATE ==========
-
-bool createNode(const char *fileName, char *inputString) {
-
-    struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
-
-    struct Node newNode;
-    bool parseResult = parseAndSetNode(&db, inputString, &newNode);
-
-    if (!parseResult) {
-        printf("CreateNode Error: invalid inputString\n");
-        return false;
-    }
-
-    addNodeToFile(fileName, &newNode);
-
-    free(newNode.columns);
-
-    return true;
-}
 
 // ======= READ ============
 
@@ -838,12 +800,9 @@ void deleteNodeByIndex(const char *fileName, int index) {
 
     if (db.nodesCount == 1) {
         // remove without replacing (if db contains only 1 element and delete it)
-        printf("HERE nodesCount == 1 \n");
         ftruncate(fileno(file), headerSize);
     } else if (db.nodesCount - 1 == index) {
         // remove without replacing (if delete last element)
-        printf("HERE db.nodesCount - 1 == index \n");
-
         fseek(file, -nodeSize, SEEK_END);
         struct Node lastNode;
         setNodeFromFile(file, &lastNode, db.columnsCount);
@@ -851,7 +810,7 @@ void deleteNodeByIndex(const char *fileName, int index) {
         int k;
         for (k = 0; k < MAX_NODE_RELATIONS; k++) {
             if (lastNode.relations[k] != -1) {
-                dropRelation("data.bin", lastNode.relations[k], index);
+                dropRelation(fileName, lastNode.relations[k], index);
             }
         }
 
@@ -868,7 +827,7 @@ void deleteNodeByIndex(const char *fileName, int index) {
         int i;
         for (i = 0; i < MAX_NODE_RELATIONS; i++) {
             if (deletingNode.relations[i] != -1) {
-                dropRelation("data.bin", deletingNode.relations[i], index);
+                dropRelation(fileName, deletingNode.relations[i], index);
             }
         }
 
@@ -884,7 +843,7 @@ void deleteNodeByIndex(const char *fileName, int index) {
         int k;
         for (k = 0; k < MAX_NODE_RELATIONS; k++) {
             if (lastNode.relations[k] != -1) {
-                updateRelation("data.bin", lastNode.relations[k], lastIndex, index);
+                updateRelation(fileName, lastNode.relations[k], lastIndex, index);
             }
         }
 
@@ -970,7 +929,7 @@ void setNewRelation(const char *fileName, int index1, int index2) {
     int k;
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         if (node1.relations[k] == index2) {
-            printf("NewRelation Error: relation already exists\n");
+            printf("NewRelation warning: relation already exists\n");
             return;
         }
     }
@@ -1049,7 +1008,7 @@ void clearAllRelationsOfNode(const char *fileName, int index) {
     int k;
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         if (node.relations[k] != -1) {
-            dropRelation("data.bin", node.relations[k], index);
+            dropRelation(fileName, node.relations[k], index);
         }
     }
 

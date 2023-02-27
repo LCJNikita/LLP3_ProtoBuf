@@ -23,8 +23,7 @@ int main(int argc, char *argv[]) {
 
     struct sockaddr_in servaddr;
     int sockfd;
-    size_t port;
-    port = strtol(argv[2], NULL, 10);
+    size_t port = strtol(argv[2], NULL, 10);
 
     if (port == 0) {
         printf("Invalid port.");
