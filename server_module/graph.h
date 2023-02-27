@@ -10,10 +10,11 @@
 #include "../proto_module/nanopb/pb.h"
 #include "../proto_module/message.pb.h"
 #include "../gremlin_module/include/structure.h"
+#include "string_tools.h"
 
 #define MAX_NAME_LENGTH 50
 #define MAX_CHAR_VALUE 256
-
+#define MAX_NODE_RELATIONS 50
 
 enum DataType {
     INT32,
@@ -33,37 +34,43 @@ struct Column {
     };
 };
 
-struct Row {
-    int columnCount;
+struct Node {
     struct Column* columns;
+    int relationsCount;
+    int relations[MAX_NODE_RELATIONS];
 };
 
 struct GraphDB {
-    int rowCount;
-    int schemeCount;
+    int nodesCount;
+    int columnsCount;
     struct Column* scheme;
-    struct Row* rows;
+    struct Node* nodes;
 };
 
 // Utils
 void printHeaderGraphDB(struct GraphDB *db);
-void printRow(struct GraphDB *db, struct Row *row);
+void printNode(struct GraphDB *db, struct Node *node);
+void printNodeToVar(struct GraphDB db, struct Node node, char** str);
 void saveHeaderStructToFile(struct GraphDB* db, const char* fileName);
 void loadHeaderStructFromFile(struct GraphDB* db, const char* fileName);
 void movePointerToEndOfHeader(FILE* file);
-void addRowToFile(const char* fileName, struct Row* row);
-void setRowFromFile(FILE* file, struct Row* row, int columnsCount);
-void iterateByEachRow(const char* fileName);
+void addNodeToFile(const char* fileName, struct Node* node);
+void iterateByEachNode(const char* fileName);
 size_t getFileSize(const char* fileName);
-bool parseAndSetRow(struct GraphDB* db, char* inputString, struct Row* setted_row);
+bool parseAndSetNode(struct GraphDB* db, char* inputString, struct Node* setted_node);
 void clearFileData(const char* fileName);
 
 // CRUD
-bool createRow(const char* fileName, char* inputString);
-bool findRowById(const char *fileName, int index, struct Row* row);
-size_t findRowsByFilters(const char *fileName, View view, int** result);
-bool checkCondition(struct Row row, struct GraphDB db, Condition condition);
-void updateRowById(const char* fileName, const char* columnName, const char* columnValue, int index);
-void setScheme(struct GraphDB *db, struct Column* scheme, int schemeCount);
+void setScheme(struct GraphDB* db, struct Column *scheme, int columnsCount);
+bool createNode(const char* fileName, char* inputString);
+void findNodeByIndex(const char* fileName, int index, struct Node* node);
+bool checkCondition(struct Node node, int id, struct GraphDB db, Condition condition);
+size_t findNodesByFilters(const char *fileName, View view, int** result);
+void updateNodeByIndex(const char* fileName, const char* columnName, const char* columnValue, int index);
+
+void deleteNodeByIndex(const char* fileName, int index);
+void setNewRelation(const char* fileName, int index1, int index2);
+void clearAllRelationsOfNode(const char* fileName, int index);
+
 
 #endif // LLP1_GRAPH_H

@@ -14,6 +14,7 @@
 void parse_view(struct view view, View *view_new);
 
 int main(int argc, char *argv[]) {
+    setbuf(stdout, 0);
 
     if (argc != 3) {
         printf("Expected 2 parameters: <host address> <port>\n Found %d.\n", argc - 1);
@@ -47,7 +48,7 @@ int main(int argc, char *argv[]) {
     while (1) {
         struct view *view = parse_request();
         if (view != NULL) {
-            print_view(view);
+//            print_view(view);
 
             View view_new = View_init_zero;
             parse_view(*view, &view_new);
@@ -65,6 +66,15 @@ int main(int argc, char *argv[]) {
                 return 2;
             }
             printf("%s", r.answer);
+
+            while(!r.is_last){
+                if (!pb_decode_delimited(&input, Response_fields, &r))
+                {
+                    printf("Decode failed: %s\n", PB_GET_ERROR(&input));
+                    return 2;
+                }
+                printf("%s", r.answer);
+            }
         }
 
     }
