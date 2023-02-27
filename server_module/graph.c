@@ -107,14 +107,10 @@ void printNodeToVar(struct GraphDB db, struct Node node, char **str) {
     free(tmp);
 }
 
-void saveHeaderStructToFile(struct GraphDB *db, const char *fileName) {
-    FILE *file = fopen(fileName, "wb");
+void saveHeaderStructToFile(struct GraphDB *db, FILE* file) {
+    long saved = ftell(file);
 
-    if (file == NULL) {
-        printf("Error opening file (probably it not exists'): %s\n", fileName);
-        return;
-    }
-
+    fseek(file, 0, SEEK_SET);
     fwrite(&db->columnsCount, sizeof(int), 1, file);
 
     int k;
@@ -124,10 +120,12 @@ void saveHeaderStructToFile(struct GraphDB *db, const char *fileName) {
 
     fwrite(&db->nodesCount, sizeof(int), 1, file);
 
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 
 void loadHeaderStructFromFile(struct GraphDB *db, FILE* file) {
+    long saved = ftell(file);
+
 
     fseek(file, 0, SEEK_SET);
     // Read the number of columns in the scheme
@@ -144,19 +142,17 @@ void loadHeaderStructFromFile(struct GraphDB *db, FILE* file) {
 
     int nodesCount;
     fread(&nodesCount, sizeof(int), 1, file);
-
     db->nodesCount = nodesCount;
 
+    fseek(file, saved, SEEK_SET);
 }
 
 FILE* tryOpenFile(const char *filename){
-    FILE *file = fopen(filename, "rb");
+    FILE *file = fopen(filename, "rb+");
 
     if (file == NULL) {
         printf("File doesn't exist. Creating new with default scheme...\n");
         file = fopen(filename, "w+b");
-        fclose(file);
-
         int columnsCount = 4;
         struct Column scheme[columnsCount];
         scheme[0].type = INT32;
@@ -169,13 +165,14 @@ FILE* tryOpenFile(const char *filename){
         strncpy(scheme[3].name, "isAdult\0", MAX_NAME_LENGTH);
         struct GraphDB db = {0};
         setScheme(&db, scheme, columnsCount);
-        saveHeaderStructToFile(&db, filename);
+        saveHeaderStructToFile(&db, file);
     }
 
     return file;
 }
 
 void movePointerToEndOfHeader(FILE *file) {
+    fseek(file, 0, SEEK_SET);
 
     // count of colums
     int columnsCount;
@@ -193,12 +190,11 @@ void movePointerToEndOfHeader(FILE *file) {
 
 // before use parseAndSetRow to create a row
 void addNodeToFile(FILE* file, struct Node *node) {
+    long saved = ftell(file);
 
     // for columns and rows count
     struct GraphDB db;
     loadHeaderStructFromFile(&db, file);
-
-//	printf("rowCount: %d \n", db.rowCount);
 
     // write new count of rows
     movePointerToEndOfHeader(file);
@@ -207,13 +203,10 @@ void addNodeToFile(FILE* file, struct Node *node) {
     int newNodesCount = db.nodesCount + 1;
     fwrite(&newNodesCount, sizeof(int), 1, file);
 
-//	printf("newRowsCount: %d\n", newRowsCount);
-//	printf("current offset: %d\n", ftell(write_file));
 
     // write new row
     fseek(file, 0, SEEK_END);
 
-//	printf("current offset: %d\n", ftell(write_file));
 
     int i;
     for (i = 0; i < db.columnsCount; i++) {
@@ -229,13 +222,12 @@ void addNodeToFile(FILE* file, struct Node *node) {
         fwrite(&relationValue, sizeof(int), 1, file);
     }
 
-//    printf("current offset: %d\n", ftell(write_file));
-
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 
 // file needs offset to the row before calling
 void setNodeFromFile(FILE *file, struct Node *node, const int columnsCount) {
+    long saved = ftell(file);
 
     node->columns = malloc(columnsCount * sizeof(struct Column));
 
@@ -250,13 +242,15 @@ void setNodeFromFile(FILE *file, struct Node *node, const int columnsCount) {
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         fread(&node->relations[k], sizeof(int), 1, file);
     }
+
+    fseek(file, saved, SEEK_SET);
 }
 
 // file needs offset to the row before calling
 void writeNodeToFile(FILE *file, struct Node *node, const int columnsCount) {
+    long saved = ftell(file);
 
-    int i;
-    for (i = 0; i < columnsCount; i++) {
+    for (int i = 0; i < columnsCount; i++) {
         fwrite(&node->columns[i], sizeof(struct Column), 1, file);
     }
 
@@ -266,6 +260,9 @@ void writeNodeToFile(FILE *file, struct Node *node, const int columnsCount) {
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         fwrite(&node->relations[k], sizeof(int), 1, file);
     }
+
+
+    fseek(file, saved, SEEK_SET);
 }
 
 bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_node, char** response) {
@@ -342,16 +339,8 @@ bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_
     return true;
 }
 
-void clearFileData(const char *fileName) {
-
-    FILE *file = fopen(fileName, "r+");
-
-    if (file == NULL) {
-        printf("Error opening file (probably it not exists'): %s\n", fileName);
-    }
-
+void clearFileData(FILE* file) {
     ftruncate(fileno(file), 0);
-    fclose(file);
 }
 
 // =========================== CRUD ================================
@@ -359,23 +348,25 @@ void clearFileData(const char *fileName) {
 
 // ======= READ ============
 
-void findNodeByIndex(const char *fileName, int index, struct Node *node) {
+void findNodeByIndex(FILE* file, int index, struct Node *node) {
+    long saved = ftell(file);
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (index < 0) {
         printf("FIND Error: Invalid index\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount == 0) {
         printf("FIND Error: db is empty\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount - 1 < index) {
         printf("FIND Error: Out if range\n");
+        fseek(file, saved, SEEK_SET);
         return;
     }
-
-    FILE *file = fopen(fileName, "rb");
 
     movePointerToEndOfHeader(file);
 
@@ -385,12 +376,14 @@ void findNodeByIndex(const char *fileName, int index, struct Node *node) {
 
     setNodeFromFile(file, node, db.columnsCount);
 
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 
-size_t findNodesByFilters(const char *fileName, View view, int **result) {
+size_t findNodesByFilters(FILE* file, View view, int **result) {
+    long saved = ftell(file);
+
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     int found_tmp[db.nodesCount];
     int *found_res = malloc(db.nodesCount * sizeof(int));
@@ -411,7 +404,7 @@ size_t findNodesByFilters(const char *fileName, View view, int **result) {
             struct Node node;
             int node_index = lvl == view.tree_count - 1 ? iter : found_res[iter];
 
-            findNodeByIndex(fileName, node_index, &node);
+            findNodeByIndex(file, node_index, &node);
 
             if (view.tree[lvl].filters_count == 0) {
                 res = true;
@@ -436,7 +429,7 @@ size_t findNodesByFilters(const char *fileName, View view, int **result) {
                 if (lvl == view.tree_count - 1)
                     found_tmp[index++] = iter;
                 else
-                    found_tmp[index++] = found_tmp[iter];
+                    found_tmp[index++] = found_res[iter];
             }
 
         }
@@ -448,7 +441,7 @@ size_t findNodesByFilters(const char *fileName, View view, int **result) {
             size_t index_tmp = 0;
 
             for (size_t i = 0; i < index; i++) {
-                findNodeByIndex(fileName, found_tmp[i], &node_tmp);
+                findNodeByIndex(file, found_tmp[i], &node_tmp);
                 for (int rel_iter = 0; rel_iter < node_tmp.relationsCount; rel_iter++) {
                     bool duplicate = false;
                     for (int j = 0; j < index_tmp; j++) {
@@ -469,6 +462,7 @@ size_t findNodesByFilters(const char *fileName, View view, int **result) {
     }
 
     *result = found_res;
+    fseek(file, saved, SEEK_SET);
     return index;
 }
 
@@ -555,18 +549,21 @@ bool checkCondition(struct Node node, int id, struct GraphDB db, Condition condi
 
 // ======= UPDATE ==========
 
-void updateNodeByIndex(const char *fileName, const char *columnName, const char *columnValue, int index) {
+void updateNodeByIndex(FILE* file, const char *columnName, const char *columnValue, int index) {
+    long saved = ftell(file);
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (db.nodesCount - 1 < index) {
         printf("UPDATE Error: index out of range");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
     if (index < 0) {
         printf("UPDATE Error: Invalid index");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
@@ -580,12 +577,12 @@ void updateNodeByIndex(const char *fileName, const char *columnName, const char 
         } else {
             if (columnIndex == db.columnsCount - 1) {
                 printf("UPDATE Error: column not found");
+                fseek(file, saved, SEEK_SET);
                 return;
             }
         }
     }
 
-    FILE *file = fopen(fileName, "rb+");
     movePointerToEndOfHeader(file);
 
     int nodeSize =
@@ -596,23 +593,17 @@ void updateNodeByIndex(const char *fileName, const char *columnName, const char 
     struct Node node;
     setNodeFromFile(file, &node, db.columnsCount);
 
-    fseek(file, -(nodeSize), SEEK_CUR);
-
     switch (db.scheme[columnIndex].type) {
         case INT32: {
             int32_t int32Value;
 
             if (sscanf(columnValue, "%d", &int32Value) != 1) {
                 printf("UPDATE Error: argument is not INT32");
+                fseek(file, saved, SEEK_SET);
                 return;
             }
 
-            printf("old int value: %d\n", node.columns[columnIndex].int32Value);
-
             node.columns[columnIndex].int32Value = int32Value;
-
-            printf("new int value: %d\n", node.columns[columnIndex].int32Value);
-
             break;
         }
         case FLOAT: {
@@ -620,33 +611,21 @@ void updateNodeByIndex(const char *fileName, const char *columnName, const char 
 
             if (sscanf(columnValue, "%f", &floatValue) != 1) {
                 printf("UPDATE Error: argument is not FLOAT");
+                fseek(file, saved, SEEK_SET);
                 return;
             }
-
-            printf("old floatValue value: %f\n", node.columns[columnIndex].floatValue);
-
             node.columns[columnIndex].floatValue = floatValue;
-
-            printf("new floatValue value: %f\n", node.columns[columnIndex].floatValue);
 
             break;
         }
         case CHAR_PTR:
             if (strlen(columnValue) + 1 > MAX_CHAR_VALUE) {
                 printf("UPDATE Error: string value is too long");
+                fseek(file, saved, SEEK_SET);
                 return;
             }
 
-            printf("old char: ");
-            printf(node.columns[columnIndex].charValue);
-            printf("\n");
-
             strncpy(node.columns[columnIndex].charValue, columnValue, MAX_CHAR_VALUE);
-
-            printf("new char: ");
-            printf(node.columns[columnIndex].charValue);
-            printf("\n");
-
             break;
         case BOOL: {
             bool boolValue;
@@ -657,35 +636,32 @@ void updateNodeByIndex(const char *fileName, const char *columnName, const char 
                 boolValue = false;
             } else {
                 printf("UPDATE Error: argument is not BOOL");
+                fseek(file, saved, SEEK_SET);
                 return;
             }
 
-            printf("old bool value: %d\n", node.columns[columnIndex].boolValue);
-
             node.columns[columnIndex].boolValue = boolValue;
-
-            printf("new bool value: %d\n", node.columns[columnIndex].boolValue);
-
             break;
         }
         default:
+            fseek(file, saved, SEEK_SET);
             return;
     }
 
-    int i;
-    for (i = 0; i < db.columnsCount; i++) {
+    for (size_t i = 0; i < db.columnsCount; i++) {
         fwrite(&node.columns[i], sizeof(struct Column), 1, file);
     }
+    fseek(file, saved, SEEK_SET);
 
-    fclose(file);
 }
 
 // ======= DELETE ==========
 
-void dropRelation(const char *fileName, int index1, int index2) {
+void dropRelation(FILE* file, int index1, int index2) {
+    long saved = ftell(file);
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (index1 < 0 || index2 < 0) {
         printf("DropRelation Error: Invalid index\n");
@@ -704,18 +680,16 @@ void dropRelation(const char *fileName, int index1, int index2) {
     int nodeSize =
             (int) sizeof(struct Column) * db.columnsCount + (int) sizeof(int) + (int) sizeof(int) * MAX_NODE_RELATIONS;
 
-    FILE *file = fopen(fileName, "rb+");
     movePointerToEndOfHeader(file);
     fseek(file, nodeSize * index1, SEEK_CUR);
 
     struct Node node;
     setNodeFromFile(file, &node, db.columnsCount);
-    fseek(file, -(nodeSize), SEEK_CUR);
 
     node.relationsCount = node.relationsCount - 1;
 
-    int j;
-    for (j = 0; j < MAX_NODE_RELATIONS; j++) {
+
+    for (int j = 0; j < MAX_NODE_RELATIONS; j++) {
         if (node.relations[j] == index2) {
             node.relations[j] = -1;
             break;
@@ -723,7 +697,7 @@ void dropRelation(const char *fileName, int index1, int index2) {
     }
 
     writeNodeToFile(file, &node, db.columnsCount);
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 
 
@@ -731,10 +705,10 @@ void dropRelation(const char *fileName, int index1, int index2) {
 // oldIndex
 // newIndex
 // function helper, when we delete some nodes
-void updateRelation(const char *fileName, int index, int oldIndex, int newIndex) {
+void updateRelation(FILE* file, int index, int oldIndex, int newIndex) {
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (index < 0 || oldIndex < 0 || newIndex < 0) {
         printf("DropRelation Error: Invalid index\n");
@@ -753,13 +727,11 @@ void updateRelation(const char *fileName, int index, int oldIndex, int newIndex)
     int nodeSize =
             (int) sizeof(struct Column) * db.columnsCount + (int) sizeof(int) + (int) sizeof(int) * MAX_NODE_RELATIONS;
 
-    FILE *file = fopen(fileName, "rb+");
     movePointerToEndOfHeader(file);
     fseek(file, nodeSize * index, SEEK_CUR);
 
     struct Node node;
     setNodeFromFile(file, &node, db.columnsCount);
-    fseek(file, -(nodeSize), SEEK_CUR);
 
     int j;
     for (j = 0; j < MAX_NODE_RELATIONS; j++) {
@@ -769,32 +741,31 @@ void updateRelation(const char *fileName, int index, int oldIndex, int newIndex)
     }
 
     writeNodeToFile(file, &node, db.columnsCount);
-
-    fclose(file);
 }
 
-void deleteNodeByIndex(const char *fileName, int index) {
+void deleteNodeByIndex(FILE* file, int index) {
+    long saved = ftell(file);
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (index < 0) {
         printf("DELETE Error: Invalid index\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount == 0) {
         printf("DELETE Error: db is empty\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount - 1 < index) {
         printf("DELETE Error: Out if range\n");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
-    FILE *file = fopen(fileName, "rb+");
     movePointerToEndOfHeader(file);
 
-    printf("current offset: %d\n", ftell(file));
-
-    int headerSize = ftell(file);
+    size_t headerSize = ftell(file);
     int nodeSize =
             (int) sizeof(struct Column) * db.columnsCount + (int) sizeof(int) + (int) sizeof(int) * MAX_NODE_RELATIONS;
 
@@ -810,7 +781,7 @@ void deleteNodeByIndex(const char *fileName, int index) {
         int k;
         for (k = 0; k < MAX_NODE_RELATIONS; k++) {
             if (lastNode.relations[k] != -1) {
-                dropRelation(fileName, lastNode.relations[k], index);
+                dropRelation(file, lastNode.relations[k], index);
             }
         }
 
@@ -827,12 +798,12 @@ void deleteNodeByIndex(const char *fileName, int index) {
         int i;
         for (i = 0; i < MAX_NODE_RELATIONS; i++) {
             if (deletingNode.relations[i] != -1) {
-                dropRelation(fileName, deletingNode.relations[i], index);
+                dropRelation(file, deletingNode.relations[i], index);
             }
         }
 
-        fclose(file);
-        file = fopen(fileName, "rb+");
+//        fclose(file);
+//        file = fopen(fileName, "rb+");
 
         fseek(file, -nodeSize, SEEK_END);
         struct Node lastNode;
@@ -843,7 +814,7 @@ void deleteNodeByIndex(const char *fileName, int index) {
         int k;
         for (k = 0; k < MAX_NODE_RELATIONS; k++) {
             if (lastNode.relations[k] != -1) {
-                updateRelation(fileName, lastNode.relations[k], lastIndex, index);
+                updateRelation(file, lastNode.relations[k], lastIndex, index);
             }
         }
 
@@ -874,34 +845,38 @@ void deleteNodeByIndex(const char *fileName, int index) {
     int newNodesCount = db.nodesCount - 1;
     fwrite(&newNodesCount, sizeof(int), 1, file);
 
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 
 // ====================== Relations ================================
 
-void setNewRelation(const char *fileName, int index1, int index2) {
+void setNewRelation(FILE* file, int index1, int index2) {
+    long saved = ftell(file);
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (index1 < 0 || index2 < 0) {
         printf("NewRelation Error: Invalid index\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount == 0) {
         printf("NewRelation Error: db is empty\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount - 1 < index1 || db.nodesCount - 1 < index2) {
         printf("NewRelation Error: Out if range\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (index1 == index2) {
         printf("NewRelation Error: indexes are equal\n");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
     int nodeSize =
             (int) sizeof(struct Column) * db.columnsCount + (int) sizeof(int) + (int) sizeof(int) * MAX_NODE_RELATIONS;
 
-    FILE *file = fopen(fileName, "rb+");
     movePointerToEndOfHeader(file);
     fseek(file, nodeSize * index1, SEEK_CUR);
 
@@ -918,11 +893,13 @@ void setNewRelation(const char *fileName, int index1, int index2) {
 
     if (node1.relationsCount == 50) {
         printf("NewRelation Error: node1 has max relations\n");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
     if (node2.relationsCount == 50) {
         printf("NewRelation Error: node2 has max relations\n");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
@@ -930,6 +907,7 @@ void setNewRelation(const char *fileName, int index1, int index2) {
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         if (node1.relations[k] == index2) {
             printf("NewRelation warning: relation already exists\n");
+            fseek(file, saved, SEEK_SET);
             return;
         }
     }
@@ -965,33 +943,36 @@ void setNewRelation(const char *fileName, int index1, int index2) {
 
     writeNodeToFile(file, &node2, db.columnsCount);
 
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 
 // index1 - node where drop relation
 // index2 - drop index
 // function helper, when we update relations or delete some nodes
 
-void clearAllRelationsOfNode(const char *fileName, int index) {
+void clearAllRelationsOfNode(FILE* file, int index) {
+    long saved = ftell(file);
 
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, fileName);
+    loadHeaderStructFromFile(&db, file);
 
     if (index < 0) {
         printf("ClearRelation Error: Invalid index\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount == 0) {
         printf("ClearRelation Error: db is empty\n");
+        fseek(file, saved, SEEK_SET);
         return;
     } else if (db.nodesCount - 1 < index) {
         printf("ClearRelation Error: Out if range\n");
+        fseek(file, saved, SEEK_SET);
         return;
     }
 
     int nodeSize =
             (int) sizeof(struct Column) * db.columnsCount + (int) sizeof(int) + (int) sizeof(int) * MAX_NODE_RELATIONS;
 
-    FILE *file = fopen(fileName, "rb+");
     movePointerToEndOfHeader(file);
     fseek(file, nodeSize * index, SEEK_CUR);
 
@@ -999,16 +980,15 @@ void clearAllRelationsOfNode(const char *fileName, int index) {
     setNodeFromFile(file, &node, db.columnsCount);
     if (node.relationsCount == 0) {
         printf("ClearRelation: node has zero relations");
-        fclose(file);
+        fseek(file, saved, SEEK_SET);
         return;
     }
-    fseek(file, -(nodeSize), SEEK_CUR);
 
     // drop relations in other nodes
     int k;
     for (k = 0; k < MAX_NODE_RELATIONS; k++) {
         if (node.relations[k] != -1) {
-            dropRelation(fileName, node.relations[k], index);
+            dropRelation(file, node.relations[k], index);
         }
     }
 
@@ -1020,7 +1000,6 @@ void clearAllRelationsOfNode(const char *fileName, int index) {
     }
 
     writeNodeToFile(file, &node, db.columnsCount);
-
-    fclose(file);
+    fseek(file, saved, SEEK_SET);
 }
 

@@ -3,9 +3,9 @@
 
 #include "graph.h"
 
-void parseAddRequest(View v, const char* filename, char** response);
-void parseGetRequest(View v, const char* filename, char** response);
-void parseRemoveRequest(View v, const char* filename, char** response);
-void parseUpdateRequest(View v, const char* filename, char** response);
+void parseAddRequest(View v, FILE* file, char** response);
+void parseGetRequest(View v, FILE* file, char** response);
+void parseRemoveRequest(View v, FILE* file, char** response);
+void parseUpdateRequest(View v, FILE* file, char** response);
 
 #endif

@@ -51,24 +51,24 @@ struct GraphDB {
 void printHeaderGraphDB(struct GraphDB *db);
 void printNode(struct GraphDB *db, struct Node *node);
 void printNodeToVar(struct GraphDB db, struct Node node, char** str);
-void saveHeaderStructToFile(struct GraphDB* db, const char* fileName);
+void saveHeaderStructToFile(struct GraphDB* db, FILE* file);
 void loadHeaderStructFromFile(struct GraphDB *db, FILE* file);
 FILE* tryOpenFile(const char *filename);
 void movePointerToEndOfHeader(FILE* file);
-void addNodeToFile(const char* fileName, struct Node* node);
+void addNodeToFile(FILE* file, struct Node *node);
 bool parseAndSetNode(struct GraphDB *db, char *inputString, struct Node *setted_node, char** response);
-void clearFileData(const char* fileName);
+void clearFileData(FILE* file);
 
 // CRUD
 void setScheme(struct GraphDB* db, struct Column *scheme, int columnsCount);
-void findNodeByIndex(const char* fileName, int index, struct Node* node);
+void findNodeByIndex(FILE* file, int index, struct Node* node);
 bool checkCondition(struct Node node, int id, struct GraphDB db, Condition condition);
-size_t findNodesByFilters(const char *fileName, View view, int** result);
-void updateNodeByIndex(const char* fileName, const char* columnName, const char* columnValue, int index);
+size_t findNodesByFilters(FILE* file, View view, int** result);
+void updateNodeByIndex(FILE* file, const char* columnName, const char* columnValue, int index);
 
-void deleteNodeByIndex(const char* fileName, int index);
-void setNewRelation(const char* fileName, int index1, int index2);
-void clearAllRelationsOfNode(const char* fileName, int index);
+void deleteNodeByIndex(FILE* file, int index);
+void setNewRelation(FILE* file, int index1, int index2);
+void clearAllRelationsOfNode(FILE* file, int index);
 
 
 #endif // LLP1_GRAPH_H

@@ -45,21 +45,21 @@ void parseAddRequest(View v, FILE* file, char **response) {
 
     struct Node node;
     if (parseAndSetNode(&db, inputString, &node, response)) {
-        addNodeToFile(filename, &node);
+        addNodeToFile(file, &node);
         for (int i = 0; i < v.entity.rel_count; i++) {
-            setNewRelation(filename, db.nodesCount, (int) v.entity.rel[i]);
+            setNewRelation(file, db.nodesCount, (int) v.entity.rel[i]);
         }
 
         int *res;
         if (v.tree_count == 1 && v.tree[0].filters_count == 0){ // чтобы выборка дала пустое множество вместо всей бд
             v.tree_count = 0;
         }
-        size_t res_cnt = findNodesByFilters(filename, v, &res);
+        size_t res_cnt = findNodesByFilters(file, v, &res);
         for (int i = 0; i < res_cnt; i++) {
-            setNewRelation(filename, db.nodesCount, (int) res[i]);
+            setNewRelation(file, db.nodesCount, (int) res[i]);
         }
 
-        findNodeByIndex(filename, db.nodesCount, &node);
+        findNodeByIndex(file, db.nodesCount, &node);
         printNode(&db, &node);
         *response = concat(*response, "Successfully added!\n");
     } else {
@@ -67,14 +67,14 @@ void parseAddRequest(View v, FILE* file, char **response) {
     }
 }
 
-void parseGetRequest(View v, const char *filename, char **response) {
+void parseGetRequest(View v, FILE* file, char **response) {
     int *res;
     struct Node node;
     char *tmp[STR_LEN];
     struct GraphDB db;
-    loadHeaderStructFromFile(&db, filename);
+    loadHeaderStructFromFile(&db, file);
 
-    size_t res_cnt = findNodesByFilters(filename, v, &res);
+    size_t res_cnt = findNodesByFilters(file, v, &res);
     if (res_cnt > 0) {
 
         sprintf((char *) tmp, "__________________\n"
@@ -85,18 +85,18 @@ void parseGetRequest(View v, const char *filename, char **response) {
                                       "No elements found.\n");
 
     for (int i = 0; i < res_cnt; i++) {
-        findNodeByIndex(filename, res[i], &node);
+        findNodeByIndex(file, res[i], &node);
         sprintf((char *) tmp, "\n---- NODE %d ----\n", res[i]);
         *response = concat(*response, (const char *) tmp);
         printNodeToVar(db, node, response);
     }
-};
+}
 
-void parseRemoveRequest(View v, const char *filename, char **response) {
+void parseRemoveRequest(View v, FILE* file, char **response) {
     int *res;
-    size_t res_cnt = findNodesByFilters(filename, v, &res);
+    size_t res_cnt = findNodesByFilters(file, v, &res);
     for (int i = 0; i < res_cnt; i++) {
-        deleteNodeByIndex(filename, res[i]);
+        deleteNodeByIndex(file, res[i]);
     }
     if (res_cnt > 0) {
         char *tmp[STR_LEN];
@@ -106,20 +106,20 @@ void parseRemoveRequest(View v, const char *filename, char **response) {
         *response = concat(*response, "No elements found to remove.\n");
 }
 
-void parseUpdateRequest(View v, const char *filename, char **response) {
+void parseUpdateRequest(View v, FILE* file, char **response) {
     int *res;
-    size_t res_cnt = findNodesByFilters(filename, v, &res);
+    size_t res_cnt = findNodesByFilters(file, v, &res);
     for (int i = 0; i < res_cnt; i++) {
         for (int j = 0; j < v.entity.fields_count; j++) {
             char *converted = malloc(sizeof(char) * STR_LEN);
             toString(v.entity.fields[j], &converted);
-            updateNodeByIndex(filename, v.entity.fields[j].name, converted, res[i]);
+            updateNodeByIndex(file, v.entity.fields[j].name, converted, res[i]);
             free(converted);
         }
         if (v.entity.rel_count != 0) {
-            clearAllRelationsOfNode(filename, res[i]);
+            clearAllRelationsOfNode(file, res[i]);
             for (int k = 0; k < v.entity.rel_count; k++) {
-                setNewRelation(filename, res[i], (int) v.entity.rel[k]);
+                setNewRelation(file, res[i], (int) v.entity.rel[k]);
             }
         }
     }

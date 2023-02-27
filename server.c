@@ -21,9 +21,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    struct GraphDB db;
-    char *filename = argv[1];
-    loadHeaderStructFromFile(&db, filename);
+    FILE* file = tryOpenFile(argv[1]);
 
     int listenfd, connfd;
     struct sockaddr_in servaddr;
@@ -73,16 +71,16 @@ int main(int argc, char **argv) {
 
         switch (v.op) {
             case CRUD_GET:
-                parseGetRequest(v, filename, &response);
+                parseGetRequest(v, file, &response);
                 break;
             case CRUD_NEW:
-                parseAddRequest(v, filename, &response);
+                parseAddRequest(v, file, &response);
                 break;
             case CRUD_REMOVE:
-                parseRemoveRequest(v, filename, &response);
+                parseRemoveRequest(v, file, &response);
                 break;
             case CRUD_UPDATE: {
-                parseUpdateRequest(v, filename, &response);
+                parseUpdateRequest(v, file, &response);
                 break;
             }
         }
